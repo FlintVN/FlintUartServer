@@ -1,5 +1,5 @@
 
-PROJECT_NAME    :=  FlintJVMUartServer
+PROJECT_NAME    :=  FlintUartServer
 BUILD_DIR       :=  Build
 BIN_DIR         :=  $(BUILD_DIR)/Bin
 OBJECT_DIR      :=  $(BUILD_DIR)/Obj
