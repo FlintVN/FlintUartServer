@@ -1,7 +1,7 @@
 
 #include "windows_uart.h"
 
-WindowsUart::WindowsUart(const char *port, uint32_t baudRate, void (*rxCallback)(WindowsUart *, uint8_t *, uint32_t)) : port(port) {
+FlintUart::FlintUart(const char *port, uint32_t baudRate, void (*rxCallback)(FlintUart *, uint8_t *, uint32_t)) : port(port) {
     this->hThread = 0;
     this->hSerial = INVALID_HANDLE_VALUE;
     this->baudRate = baudRate;
@@ -18,7 +18,7 @@ WindowsUart::WindowsUart(const char *port, uint32_t baudRate, void (*rxCallback)
     this->portPath[index + 4] = 0;
 }
 
-bool WindowsUart::connect(void) {
+bool FlintUart::connect(void) {
     if(hSerial != INVALID_HANDLE_VALUE && isConnect())
         return true;
     hSerial = CreateFile(
@@ -71,7 +71,7 @@ bool WindowsUart::connect(void) {
     return true;
 }
 
-bool WindowsUart::isConnect(void) const {
+bool FlintUart::isConnect(void) const {
     if(hSerial == INVALID_HANDLE_VALUE)
         return false;
     else {
@@ -83,7 +83,7 @@ bool WindowsUart::isConnect(void) const {
     }
 }
 
-bool WindowsUart::isDataAvailable(void) {
+bool FlintUart::isDataAvailable(void) {
     if(hSerial == INVALID_HANDLE_VALUE)
         return false;
     else {
@@ -97,7 +97,7 @@ bool WindowsUart::isDataAvailable(void) {
     }
 }
 
-uint32_t WindowsUart::readData(uint8_t *buff, uint32_t size) const {
+uint32_t FlintUart::readData(uint8_t *buff, uint32_t size) const {
     DWORD bytesRead = 0;
     if(hSerial == INVALID_HANDLE_VALUE)
         return 0;
@@ -106,7 +106,7 @@ uint32_t WindowsUart::readData(uint8_t *buff, uint32_t size) const {
     return bytesRead;
 }
 
-bool WindowsUart::sendData(uint8_t *data, uint32_t size) const {
+bool FlintUart::sendData(uint8_t *data, uint32_t size) const {
     DWORD bytesWrite = 0;
     if(hSerial == INVALID_HANDLE_VALUE)
         return false;
@@ -115,7 +115,7 @@ bool WindowsUart::sendData(uint8_t *data, uint32_t size) const {
     return bytesWrite == size;
 }
 
-void WindowsUart::receiveTask(WindowsUart *uart) {
+void FlintUart::receiveTask(FlintUart *uart) {
     uint8_t rxBuff[1024 + 1];
     while(1) {
         if(uart->isDataAvailable()) {
@@ -127,7 +127,7 @@ void WindowsUart::receiveTask(WindowsUart *uart) {
     }
 }
 
-WindowsUart::~WindowsUart(void) {
+FlintUart::~FlintUart(void) {
     if(hThread)
         TerminateThread(hThread, 0);
     if(isConnect())

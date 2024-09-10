@@ -5,16 +5,16 @@
 
 using namespace std;
 
-WindowsTcp *tcp = NULL;
-WindowsUart *uart = NULL;
+FlintTcp *tcp = NULL;
+FlintUart *uart = NULL;
 
 static void cleanup(void) {
     if(tcp) {
-        tcp->~WindowsTcp();
+        tcp->~FlintTcp();
         delete tcp;
     }
     if(uart) {
-        uart->~WindowsUart();
+        uart->~FlintUart();
         delete uart;
     }
 }
@@ -27,19 +27,19 @@ static BOOL WINAPI consoleHandler(DWORD signal) {
     return TRUE;
 }
 
-static void tcpRxHandler(WindowsTcp *tcp, uint8_t *data, uint32_t size) {
+static void tcpRxHandler(FlintTcp *tcp, uint8_t *data, uint32_t size) {
     if(uart) {
         if(!uart->sendData(data, size))
             std::cout << "Error: Could not send data to " << uart->port << std::endl;
     }
 }
 
-static void uartRxHandler(WindowsUart *uart, uint8_t *data, uint32_t size) {
+static void uartRxHandler(FlintUart *uart, uint8_t *data, uint32_t size) {
     if(tcp)
         tcp->sendData(data, size);
 }
 
-static void checkUartConnectTask(WindowsUart *uart) {
+static void checkUartConnectTask(FlintUart *uart) {
     while(1) {
         Sleep(100);
         if(!uart->isConnect()) {
@@ -64,9 +64,9 @@ int main(int argc, char *argv[]) {
         std::cout << "Error: Please specify COM port" << std::endl;
         return 1;
     }
-    uart = new WindowsUart(port, 921600, uartRxHandler);
+    uart = new FlintUart(port, 921600, uartRxHandler);
     if(uart->connect()) {
-        tcp = new WindowsTcp(9620, "127.0.0.1", tcpRxHandler);
+        tcp = new FlintTcp(9620, "127.0.0.1", tcpRxHandler);
         Sleep(10);
         std::cout << "FlintJVM debug server is started" << std::endl;
     }

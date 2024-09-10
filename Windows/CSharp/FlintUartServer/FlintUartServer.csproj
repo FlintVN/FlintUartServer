@@ -51,10 +51,10 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Protocol.cs" />
-    <Compile Include="ProtocolAdapter.cs" />
-    <Compile Include="WindowsTcp.cs" />
-    <Compile Include="WindowsUart.cs" />
+    <Compile Include="FlintProtocol.cs" />
+    <Compile Include="FlintProtocolAdapter.cs" />
+    <Compile Include="FlintTcp.cs" />
+    <Compile Include="FlintUart.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

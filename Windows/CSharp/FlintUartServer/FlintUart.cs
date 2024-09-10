@@ -1,14 +1,14 @@
 ﻿using System.IO.Ports;
 
-namespace FlintJVMUartServer {
-    internal class WindowsUart : Protocol {
+namespace FlintUartServer {
+    internal class FlintUart : FlintProtocol {
         public event DataReceived DataReceived;
 
         private SerialPort serialPort;
         private string port;
         private int baurdRate;
 
-        public WindowsUart(string port, int baurdRate) {
+        public FlintUart(string port, int baurdRate) {
             this.serialPort = null;
             this.port = port;
             this.baurdRate = baurdRate;
