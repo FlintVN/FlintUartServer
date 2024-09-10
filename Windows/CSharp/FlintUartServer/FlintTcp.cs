@@ -2,8 +2,8 @@
 using System.Net.Sockets;
 using System.Threading;
 
-namespace FlintJVMUartServer {
-    internal class WindowsTcp : Protocol {
+namespace FlintUartServer {
+    internal class FlintTcp : FlintProtocol {
         public event DataReceived DataReceived;
 
         private int port;
@@ -12,7 +12,7 @@ namespace FlintJVMUartServer {
         private Socket client;
         private Thread rxThread;
 
-        public WindowsTcp(int port, IPAddress address) {
+        public FlintTcp(int port, IPAddress address) {
             this.port = port;
             this.address = address;
             listener = null;

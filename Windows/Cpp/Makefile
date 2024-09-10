@@ -7,8 +7,8 @@ OBJECT_DIR      :=  $(BUILD_DIR)/Obj
 CC              :=  g++
 
 SOURCES       	:=  User/Src/main.cpp                                           \
-                    User/Src/windows_tcp.cpp                                    \
-                    User/Src/windows_uart.cpp
+                    User/Src/flint_tcp.cpp                                      \
+                    User/Src/flint_uart.cpp
 
 INCLUDES      	:=  User/Inc
 

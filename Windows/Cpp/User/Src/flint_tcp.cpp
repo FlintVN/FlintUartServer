@@ -1,8 +1,7 @@
 
 #include "windows_tcp.h"
-#include "flint_debugger.h"
 
-WindowsTcp::WindowsTcp(uint16_t port, const char *address, void (*rxCallback)(WindowsTcp *, uint8_t *, uint32_t)) {
+FlintTcp::FlintTcp(uint16_t port, const char *address, void (*rxCallback)(FlintTcp *, uint8_t *, uint32_t)) {
     WSADATA wsaData;
     SOCKADDR_IN serverAddr;
 
@@ -30,7 +29,7 @@ WindowsTcp::WindowsTcp(uint16_t port, const char *address, void (*rxCallback)(Wi
     );
 }
 
-bool WindowsTcp::sendData(uint8_t *data, uint32_t length) {
+bool FlintTcp::sendData(uint8_t *data, uint32_t length) {
     WaitForSingleObject(semaphore, INFINITE);
     if(!client)
         return false;
@@ -39,7 +38,7 @@ bool WindowsTcp::sendData(uint8_t *data, uint32_t length) {
     return ret;
 }
 
-void WindowsTcp::receiveTask(WindowsTcp *tcp) {
+void FlintTcp::receiveTask(FlintTcp *tcp) {
     char rxBuff[1024];
     SOCKADDR_IN clientAddr;
     int clientAddrSize = sizeof(clientAddr);
@@ -64,7 +63,7 @@ void WindowsTcp::receiveTask(WindowsTcp *tcp) {
     }
 }
 
-WindowsTcp::~WindowsTcp(void) {
+FlintTcp::~FlintTcp(void) {
     if(hThread)
         TerminateThread(hThread, 0);
     if(semaphore)

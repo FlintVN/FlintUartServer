@@ -5,24 +5,24 @@
 #include <future>
 #include <winsock2.h>
 
-class WindowsTcp {
+class FlintTcp {
 private:
     HANDLE hThread;
     SOCKET server;
     SOCKET client;
     HANDLE semaphore;
-    void (*rxCallback)(WindowsTcp *, uint8_t *, uint32_t);
+    void (*rxCallback)(FlintTcp *, uint8_t *, uint32_t);
 public:
-    WindowsTcp(uint16_t port, const char *address, void (*rxCallback)(WindowsTcp *, uint8_t *, uint32_t) = 0);
+    FlintTcp(uint16_t port, const char *address, void (*rxCallback)(FlintTcp *, uint8_t *, uint32_t) = 0);
 
     bool sendData(uint8_t *data, uint32_t length);
 
-    ~WindowsTcp(void);
+    ~FlintTcp(void);
 private:
-    WindowsTcp(const WindowsTcp &) = delete;
-    void operator=(const WindowsTcp &) = delete;
+    FlintTcp(const FlintTcp &) = delete;
+    void operator=(const FlintTcp &) = delete;
 
-    static void receiveTask(WindowsTcp *tcp);
+    static void receiveTask(FlintTcp *tcp);
 };
 
 #endif /* __WINDOWS_TCP_H */
